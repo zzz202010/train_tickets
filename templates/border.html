@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订票</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+</head>
+<body>
+<!--head-->
+{% csrf_token %}
+   <div class="header">
+   		<div class="inner">
+   			<div class="logo">
+   <a href="/train/" title="火车票"><img src="/static/img/logo.webp" width="60" height="60"/></a>
+   			</div>
+   			<div class="headlink">
+                {% if request.user.is_authenticated %}
+   				    {{ request.user.username }}<a href="{% url 'Train:user_logout' %}">退出登录</a>
+                    &nbsp;|&nbsp;
+                    <a href="{% url 'Train:change_password' %}">修改密码</a>
+   				{% else %}
+                    <a href="{% url 'Train:user_login' %}">登录</a>
+                    &nbsp;|&nbsp;
+                    <a href="/register/">注册</a>
+                {% endif %}
+   			</div>
+   		</div>
+   </div>
+<!--head end-->
+<div class="middle">
+   <div class="cont">
+   <!--菜单-->
+       <div class="class">
+           <ul>
+               <h3 style="color:#FFF;">栏目分类</h3>
+               <a href="/train/" class="_all2"><li>车票查询</li></a>
+               <a href="#" class="net"><li>申请订票</li></a>
+               <a href="/corder/" class="_all3"><li>我的火车票</li></a>
+               <a href="/problem/" class="_all5"><li>问题反馈</li></a>
+           </ul>
+       </div>
+       <!--菜单 end-->
+       <!--指南-->
+       <div class="class_a">
+      <!--申请订票-->
+           <div class="all1">
+               <h4 style="color:#fff">申请订票</h4>
+               {% if request.user.is_authenticated %}
+               <form method="post" action="{% url 'Train:book_order1' %}">
+                   {% csrf_token %}
+                   <table width="800" height="150" style="margin:auto; margin-top:50px; border:1px solid #FFF;" border="1" cellpadding="0" cellspacing="0" >
+
+                       <tr>
+                           <td width="120">真实姓名:</td>
+                           <td width="277.6"><input style="width:250px; background:none;" type="text" name="oname" /><span>*</span></td>
+                           {{ form.oname.errors }}
+                           <td width="120">身份证:</td>
+                           <td width="277.6"><input style="width:250px; background:none;" type="text" name="code" /><span>*</span></td>
+                           {{ form.code.errors }}
+                       </tr>
+                       {% for train in trains %}
+                       <tr>
+                           <td width="120">联系电话:</td>
+                           <td width="277.6"><input style="width:250px; background:none;" type="text" name="ophone" /><span>*</span></td>
+                           {{ form.ophone.errors }}
+                           <td width="120">座位价格:</td>
+                           <td  width="277.6">
+                               <select name="seat_type" id="">
+                                   {% if train.sw_seat %}
+                                       {% if train.sw_seat != '无' %}
+                                           {% if train.sw_seat != '0' %}
+                                               <option value="商务座">
+                                                   商务座 ¥1998
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.one_seat %}
+                                       {% if train.one_seat != '无' %}
+                                           {% if train.one_seat != '0' %}
+                                               <option value="一等座">
+                                                   一等座 ¥969
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.tow_seat %}
+                                       {% if train.tow_seat != '无' %}
+                                           {% if train.tow_seat != '0' %}
+                                               <option value="二等座">
+                                                   二等座 ¥576
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.high_soft_lie %}
+                                       {% if train.high_soft_lie != '无' %}
+                                           {% if train.high_soft_lie != '0' %}
+                                               <option value="高级软卧">
+                                                   高级软卧 ¥500
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.soft_lie %}
+                                       {% if train.soft_lie != '无' %}
+                                           {% if train.soft_lie != '0' %}
+                                               <option value="软卧">
+                                                   软卧 ¥455.5
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.move_lie %}
+                                       {% if train.move_lie != '无' %}
+                                           {% if train.move_lie != '0' %}
+                                               <option value="动卧">
+                                                   动卧 ¥300
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.strong_lie %}
+                                       {% if train.strong_lie != '无' %}
+                                           {% if train.strong_lie != '0' %}
+                                               <option value="硬卧">
+                                                   硬卧 ¥283.5
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.soft_seat %}
+                                       {% if train.soft_seat != '无' %}
+                                           {% if train.soft_seat != '0' %}
+                                               <option value="软座">
+                                                   软座 ¥235
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.strong_seat %}
+                                       {% if train.strong_seat != '无' %}
+                                           {% if train.strong_seat != '0' %}
+                                               <option value="硬座">
+                                                   硬座 ¥156.5
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                                   {% if train.no_seat %}
+                                       {% if train.no_seat != '无' %}
+                                           {% if train.no_seat != '0' %}
+                                               <option value="无座">
+                                                   无座 ¥156.5
+                                               </option>
+                                           {% endif %}
+                                       {% endif %}
+                                   {% endif %}
+                               </select>
+                           </td>
+                       </tr>
+                       <tr>
+                           <td width="120">车次:</td>
+                           <td><input style="width:250px; background:none;" type="text" name="train_code" value="{{ train.train_code }}"/></td>
+                           <td width="120">起点站:</td>
+                           <td><input style="width:250px; background:none;" type="text" name="from_station_name" value="{{ train.from_station_name }}"/></td>
+                       </tr>
+                       <tr>
+                           <td width="120">终点站:</td>
+                           <td><input style="width:250px; background:none;" type="text" name="to_station_name" value="{{ train.to_station_name }}"/></td>
+                           <td width="120">出发日期:</td>
+                           <td><input style="width:250px; background:none;" type="text" name="date" value="{{ train.date }}"/></td>
+                       </tr>
+                           <tr>
+                           <td width="100">出发时间:</td>
+                           <td><input style="width:250px; background:none;" type="text" name="start_time" value="{{ train.start_time }}"/></td>
+                           <td width="100">到达时间:</td>
+                           <td><input style="width:250px; background:none;" type="text" name="arrive_time" value="{{ train.arrive_time }}"/></td>
+                       </tr>
+                       {% endfor %}
+                   </table>
+                   <div class="tom" style="margin-top:20px;">
+                       <input name="clear" style="width:80px; height:30px;" type="reset" value="清空" />
+                       <input name="play" style="width:80px; height:30px; " type="submit" value="预定" />
+                   </div>
+                   <span style="float:right;">注：标注*为必填项！</span>
+               </form>
+               {% else %}
+                   请先<a href="/login/">登录</a>
+               {% endif %}
+           </div>
+  <!--申请订票 end-->
+       </div>
+          <!--指南 end-->
+   </div>
+</div>
+   <!--middle end-->
+<div class="foot">
+    <p>
+     火车订票
+    </p>
+</div>
+
+</body>
+{% if messages %}
+<script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+</script>
+{% endif %}
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/index.js"></script>
+</html>
+
+</body>
+</html>

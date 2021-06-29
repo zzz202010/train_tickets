@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>找回密码</title>
+<link type="text/css" rel="stylesheet" href="/static/css/register.css" />
+</head>
+<body>
+<!--head-->
+<form action="{% url "Train:forget_password" %}" method="post" >
+     {% csrf_token %}
+   <div class="header">
+   		<div class="inner">
+   			<div class="logo">
+                <a href="/train/" title="火车票"><img src="/static/img/logo.webp" width="60" height="60"/></a>
+   			</div>
+   			<div class="headlink">
+   				<a href="/train/">首页</a>
+   				&nbsp;|&nbsp;
+                <a href="/login/">登录</a>
+   				&nbsp;|&nbsp;
+   				<a href="/register/">注册</a>
+   			</div>
+   		</div>
+   </div>
+<!--head end-->
+<!--middle-->
+<div class="middle">
+   <div class="cont">
+   <!--填写-->
+       <ul>
+           <li>
+               <span class="user_t" style="box-shadow:0px 0px 5px 4px #fff; ">
+               </span>填写</li>
+           <li>
+               <span class="user_y"></span>找回密码成功</li>
+       </ul>
+       <div class="user">
+           <h3>找回密码</h3>
+               <div class="input">
+                   <label>手机号</label>
+                   <input placeholder="手机号" type="text" name="uphone" id="pw" />&nbsp;
+                   <span class="t1"></span>
+                   {{ form.uphone.errors }}
+               </div>
+               <div class="input">
+                   <label>验证码</label>
+                   <span class="t1"></span>
+                   {{ form.captcha }} {{ form.captcha.errors }}
+               </div>
+               <div class="input">
+                   <label for="pw">新密码</label>
+                   <input value="" placeholder="新密码" type="password" name="password1" id="pw1" />&nbsp;
+                   <span class="t2"></span>
+                   {{ form.password1.errors }}
+               </div>
+
+               <div class="input" id="input">
+                   <label></label>
+                   <input type="submit" id="submit" class="submit" style="width:220px;" value="找回密码" />
+               </div>
+       </div>
+  <!--填写 end-->
+   </div>
+</div>
+
+   <!--middle end-->
+<div class="foot">
+    <p>
+     火车订票系统
+     </p>
+</div>
+</form>
+</body>
+<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+{#<script type="text/javascript" src="/static/js/register.js"></script>#}
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户登录</title>
+<link type="text/css" rel="stylesheet" href="/static/css/register.css" />
+</head>
+<body>
+<!--head-->
+<form action="{% url "Train:user_login" %}" method="post" >
+     {% csrf_token %}
+   <div class="header">
+   		<div class="inner">
+   			<div class="logo">
+                <a href="/train/" title="火车票"><img src="/static/img/logo.webp" width="60" height="60"/></a>
+   			</div>
+   			<div class="headlink">
+   				<a href="/train/">首页</a>
+   				&nbsp;|&nbsp;
+   				<a href="/register/">注册</a>
+   			</div>
+   		</div>
+   </div>
+<!--head end-->
+<!--middle-->
+<div class="middle">
+   <div class="cont">
+   <!--填写-->
+       <ul>
+           <li>
+               <span class="user_t" style="box-shadow:0px 0px 5px 4px #fff; ">
+               </span>填写</li>
+           <li>
+               <span class="user_y"></span>验证</li>
+           <li>
+               <span class="user_z"></span>登录成功</li>
+       </ul>
+       <div class="user">
+           <h3>用户登录</h3>
+               <div class="input">
+                   <label>用户名</label>
+                   <input value="" placeholder="用户名"  autocomplete="off" type="text" name="username" id="name" />&nbsp;
+                   <span class="t"></span>
+                   {{ form.username.errors }}
+                   <br />
+               </div>
+
+               <div class="input">
+                   <label style="letter-spacing:15px">密码</label>
+                   <input placeholder="密码" type="password" name="password" id="pw" />&nbsp;
+                   {{ form.password.errors }}
+                   <span class="t1"></span>
+               </div>
+
+               <div class="input">
+                   <label>验证码</label>
+                   <span class="t1"></span>
+                   {{ form.captcha }} {{ form.captcha.errors }}
+
+               </div>
+
+               <div class="input" id="input">
+                   <label></label>
+                   <input type="submit" id="submit" class="submit" style="width:220px;" value="登录" />
+               </div>
+
+
+           <br />
+           <a href="#" style="color:#FFC; display:block; margin-top:20px;">
+               登录即代表您同意我们的服务协议和隐私政策
+           </a>
+       </div>
+  <!--填写 end-->
+   </div>
+</div>
+
+   <!--middle end-->
+<div class="foot">
+    <p>
+     火车订票系统
+     </p>
+</div>
+</form>
+
+</body>
+{% if messages %}
+<script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+</script>
+{% endif %}
+<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+{#<script type="text/javascript" src="/static/js/register.js"></script>#}
+</html>
+
+
+
+
+
+
+
+{#<!doctype html>#}
+{#<html>#}
+{#<head>#}
+{#<meta charset="utf-8">#}
+{#<!--手机自适应<meta name="viewport" content="width=device,initial-scale=1.0">-->#}
+{#<title>用户登录</title>#}
+{#<link rel="stylesheet" type="text/css" href="/static/css/login.css">#}
+{#<script type="text/javascript" src="/static/js/jquery.min.js"></script>#}
+{#</head>#}
+{#<body>#}
+{#<!--head-->#}
+{#<form action="{% url "Train:user_login" %}" method="post" >#}
+{#   <div class="header">#}
+{#   		<div class="inner">#}
+{#   			<div class="logo">#}
+{#                <a href="/index/" title="火车票"><img src="/static/img/logo.webp" width="60" height="60"/></a>#}
+{#   			</div>#}
+{#   			<div class="headlink">#}
+{#                <a href="/index/">首页</a>#}
+{#                &nbsp;|&nbsp;#}
+{#                <a href="/register/">注册</a>#}
+{#   				&nbsp;|&nbsp;#}
+{#			    <a href="/login/">▶注销</a>#}
+{#   			</div>#}
+{#   		</div>#}
+{#   </div>#}
+{#   <!--head end-->#}
+{#   <!--banner-->#}
+{#   <div class="middle">#}
+{#       <div class="cont">#}
+{#           <div class="banner">#}
+{#               <img src="/static/img/tr.png" width="860" height="400" style="opacity:0.3"/>#}
+{#           </div>#}
+{#           <div class="loginbox">#}
+{#               <div class="head">#}
+{#                   <a>账号密码登录</a>#}
+{#               </div>#}
+{##}
+{#                   {% csrf_token %}#}
+{#                   <div class="ct">#}
+{#                       <div class="item">#}
+{#                           <div class="inputbox">#}
+{#                               <input name="uphone" type="text" autocomplete="off" placeholder="手机号"  />#}
+{#                               <a href="javascript:void(0)" class="delusername"></a>#}
+{#                           </div>#}
+{#                           <div class="inputbox">#}
+{#                               <input name="password" type="password" autocomplete="off" placeholder="密码" />#}
+{#                           </div>#}
+{#                           <div class="submitBtn">#}
+{#                               <input type="submit" value="登 录"/>#}
+{#                           </div>#}
+{#                       </div>#}
+{#                   </div>#}
+{#           </div>#}
+{#       </div>#}
+{#   </div>#}
+{#    <!--banner end-->#}
+{#    <div class="foot">#}
+{##}
+{#     <p>#}
+{#     火车订票#}
+{#     </p>#}
+{#    </div>#}
+{#</form>#}
+{#</body>#}
+{#<script type="text/javascript" src="/static/js/login.js"></script>#}
+{#</html>#}
+{##}

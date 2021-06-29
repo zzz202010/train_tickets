@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>问题反馈</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+</head>
+<body>
+<!--head-->
+   <div class="header">
+   		<div class="inner">
+   			<div class="logo">
+   <a href="/train/" title="火车票"><img src="/static/img/logo.webp" width="60" height="60"/></a>
+   			</div>
+   			<div class="headlink">
+                {% if request.user.is_authenticated %}
+   				    {{ request.user.username }}<a href="{% url 'Train:user_logout' %}">退出登录</a>
+                    &nbsp;|&nbsp;
+                    <a href="{% url 'Train:change_password' %}">修改密码</a>
+   				{% else %}
+                    <a href="{% url 'Train:user_login' %}">登录</a>
+                    &nbsp;|&nbsp;
+                    <a href="/register/">注册</a>
+                {% endif %}
+   			</div>
+   		</div>
+   </div>
+<!--head end-->
+<div class="middle">
+   <div class="cont">
+   <!--菜单-->
+       <div class="class">
+           <ul>
+               <h3 style="color:#FFF;">栏目分类</h3>
+               <a href="/train/" class="_all2"><li>车票查询</li></a>
+{#               <a href="#" class="_all3"><li>申请订票</li></a>#}
+               <a href="/corder/" class="_all3"><li>我的火车票</li></a>
+               <a href="/problem/" class="net"><li>问题反馈</li></a>
+           </ul>
+       </div>
+       <!--菜单 end-->
+       <!--指南-->
+       <div class="class_a">
+      <!--申请订票-->
+           <div class="all1">
+               <h4 style="color:#fff">问题反馈</h4>
+               {% if request.user.is_authenticated %}
+               <form method="post" action="{% url 'Train:problems' %}">
+               {% csrf_token %}
+               <br/>
+               <a>请填写你的使用体验以及意见：</a>
+               <br/>
+                   <br/>
+               <textarea cols="60" rows="3" name="problem"></textarea>
+                   {{ form.problem.errors }}
+               <div class="tom" style="margin-top:20px;">
+                   <input name="play" style="width:80px; height:30px; " type="submit" value="提交" />
+               </div>
+               </form>
+               {% else %}
+                   请先<a href="/login/">登录</a>
+               {% endif %}
+           </div>
+  <!--申请订票 end-->
+       </div>
+          <!--指南 end-->
+   </div>
+</div>
+   <!--middle end-->
+<div class="foot">
+    <p>
+     火车订票
+    </p>
+</div>
+
+</body>
+{% if messages %}
+<script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+</script>
+{% endif %}
+<script src="/static/js/jquery.min.js"></script>
+{#<script src="/static/js/index.js"></script>#}
+</html>
+
+</body>
+</html>

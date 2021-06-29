@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的火车票</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+</head>
+<body>
+<!--head-->
+   <div class="header">
+   		<div class="inner">
+   			<div class="logo">
+   <a href="/train/" title="火车票"><img src="/static/img/logo.webp" width="60" height="60"/></a>
+   			</div>
+   			<div class="headlink">
+                {% if request.user.is_authenticated %}
+   				    {{ request.user.username }}<a href="{% url 'Train:user_logout' %}">退出登录</a>
+                    &nbsp;|&nbsp;
+                    <a href="{% url 'Train:change_password' %}">修改密码</a>
+   				{% else %}
+                    <a href="{% url 'Train:user_login' %}">登录</a>
+                    &nbsp;|&nbsp;
+                    <a href="/register/">注册</a>
+                {% endif %}
+   			</div>
+   		</div>
+   </div>
+<!--head end-->
+<div class="middle">
+   <div class="cont">
+   <!--菜单-->
+       <div class="class">
+           <ul>
+               <h3 style="color:#FFF;">栏目分类</h3>
+               <a href="/train/" class="_all2"><li>车票查询</li></a>
+{#               <a href="/index/" class="_all3"><li>申请订票</li></a>#}
+               <a href="/corder/" class="net"><li>我的火车票</li></a>
+               <a href="/problem/" class="_all5"><li>问题反馈</li></a>
+           </ul>
+       </div>
+       <!--菜单 end-->
+       <!--指南-->
+       <div class="class_a">
+      <!--我的火车票-->
+           <div class="all1">
+               <h4 style="color:#fff">我的火车票</h4>
+           {% if request.user.is_authenticated %}
+               <div class="table-d">
+                   <table width="1000" border="1" cellspacing="1" cellpadding="0">
+
+                       <tr>
+                           <td width="100">车次</td>
+                           <td width="100">出发日期</td>
+                           <td width="100">出发时间<br/>到达时间</td>
+                           <td width="100">起点站</td>
+                           <td width="100">终点站</td>
+                           <td width="100">座位</td>
+                           <td width="100">价格</td>
+                           <td width="100">操作</td>
+                       </tr>
+                       {% for order in orders %}
+                       <tr>
+                           <td>{{ order.train_code }}</td>
+                           <td>{{ order.date }}</td>
+                           <td>{{ order.start_time }}<br/>{{ order.arrive_time }}</td>
+                           <td>{{ order.from_station_name }}</td>
+                           <td>{{ order.to_station_name }}</td>
+                           <td>{{ order.seat_type }}</td>
+                           <td>{{ order.price }}</td>
+                           <td>
+                               <form method="post" action="{% url 'Train:change_order' %}">
+                               {% csrf_token %}
+                                   <input type="hidden" name="id" value="{{ order.id }}">
+                                   <input type="submit"  style="color:#333333" value="改签">
+                               </form>
+                               <form method="post" action="{% url 'Train:cancel_order' %}">
+                               {% csrf_token %}
+                                   <input type="hidden" name="id" value="{{ order.id }}">
+                                   <input type="submit"  style="color:#333333" value="退票">
+                               </form>
+                           </td>
+                       </tr>
+                       {% endfor %}
+                       <br/>
+                   {% if c_price %}
+                       <p>正在退{{ c_price }}元差价</p>
+                       {% endif %}
+                   </table>
+               </div>
+           {% else %}
+               请先<a href="/login/">登录</a>
+           {% endif %}
+           </div>
+       </div>
+          <!--指南 end-->
+   </div>
+</div>
+
+
+   <!--middle end-->
+<div class="foot">
+    <p>
+     火车订票
+    </p>
+</div>
+
+</body>
+{% if messages %}
+<script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+</script>
+{% endif %}
+<script src="/static/js/jquery.min.js"></script>
+{#<script src="/static/js/index.js"></script>#}
+</html>
+
+</body>
+</html>
